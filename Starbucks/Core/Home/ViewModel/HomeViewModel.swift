@@ -37,8 +37,4 @@ final class HomeViewModel: ObservableObject {
 
         selectedCategory = .Frappuccino
     }
-
-    func getValueBasedOnIndex(index: Int, minValue: Int, maxValue: Int) -> CGFloat {
-        return CGFloat((index / 2) % 2 == 0 ? (index % 2 == 0 ? minValue : maxValue) : (index % 2 == 0 ? maxValue : minValue))
-    }
 }

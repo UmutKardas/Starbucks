@@ -9,6 +9,9 @@ import SwiftUI
 
 struct HomeUIView: View {
     @StateObject var viewModel: HomeViewModel = .init()
+    
+    private let screenWidth = UIScreen.main.bounds.width
+    private let screenHeight = UIScreen.main.bounds.height
 
     var body: some View {
         NavigationStack {
@@ -36,7 +39,7 @@ struct HomeUIView: View {
                             .font(.system(size: 16, weight: .regular))
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
-                    .padding(.horizontal, UIScreen.main.bounds.width * 0.08)
+                    .padding(.horizontal, screenWidth * 0.08)
                     
                     // MARK: - Search Bar
                     
@@ -63,7 +66,7 @@ struct HomeUIView: View {
                     }
                     .background(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
-                    .padding(.horizontal, UIScreen.main.bounds.width * 0.08)
+                    .padding(.horizontal, screenWidth * 0.08)
                     
                     // MARK: - Categories
                     
@@ -96,18 +99,18 @@ struct HomeUIView: View {
                         }
                     }
                     .cornerRadius(10)
-                    .padding(.leading, UIScreen.main.bounds.width * 0.08)
+                    .padding(.leading, screenWidth * 0.08)
                     
                     // MARK: - Products
                     
                     ScrollView(.vertical, showsIndicators: false) {
                         LazyVGrid(columns: [.init(), .init()]) {
-                            ForEach(Array(viewModel.selectedProducts.enumerated()), id: \.element.id) { index, product in
-                                ProductGridCell(isProductViewPresented: $viewModel.isProductViewPresented, product: product, imageHeight: viewModel.getValueBasedOnIndex(index: index, minValue: 130, maxValue: 170), gridHeight: viewModel.getValueBasedOnIndex(index: index, minValue: 160, maxValue: 200))
+                            ForEach(Array(viewModel.selectedProducts.enumerated()), id: \.element.id) { _, product in
+                                ProductGridCell(isProductViewPresented: $viewModel.isProductViewPresented, product: product, imageHeight: screenHeight * 0.15, gridHeight: screenHeight * 0.2)
                             }
                         }
                     }
-                    .padding(.horizontal, UIScreen.main.bounds.width * 0.08)
+                    .padding(.horizontal, screenWidth * 0.08)
                 }
             }
         }

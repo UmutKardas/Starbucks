@@ -10,6 +10,14 @@ import SwiftUI
 struct CustomStepper: View {
     @Binding var value: Int
 
+    var scaleFactor: CGFloat = 1
+
+    var textColor: Color
+    var textSecondaryColor: Color
+
+    var backgroundColor: Color
+    var backgroundSecondaryColor: Color
+
     var body: some View {
         HStack {
             Button(action: {
@@ -17,30 +25,36 @@ struct CustomStepper: View {
             }) {
                 Text("-")
                     .font(.system(size: 24))
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 15)
-                    .padding(.vertical, 5)
-                    .background(Color("greenColor"))
+                    .foregroundColor(textSecondaryColor)
+                    .padding(.horizontal, 15 * scaleFactor)
+                    .padding(.vertical, 5 * scaleFactor)
+                    .background(backgroundSecondaryColor)
                     .cornerRadius(10)
             }
 
             Text("\(value)")
+                .foregroundStyle(textColor)
                 .font(.system(size: 16, weight: .bold))
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 20 * scaleFactor)
 
             Button(action: {
                 value += 1
             }) {
                 Text("+")
                     .font(.system(size: 24))
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 15)
-                    .padding(.vertical, 5)
-                    .background(Color("greenColor"))
+                    .foregroundColor(textSecondaryColor)
+                    .padding(.horizontal, 15 * scaleFactor)
+                    .padding(.vertical, 5 * scaleFactor)
+                    .background(backgroundSecondaryColor)
                     .cornerRadius(10)
             }
         }
-        .background(Color("grayColor"))
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(backgroundColor)
+        .cornerRadius(10)
     }
+}
+
+#Preview {
+    CustomStepper(value: .constant(1), textColor: Color("greenColor"), textSecondaryColor: .white, backgroundColor: Color("grayColor"), backgroundSecondaryColor: Color("greenColor"))
+        .frame(maxWidth: .infinity)
 }

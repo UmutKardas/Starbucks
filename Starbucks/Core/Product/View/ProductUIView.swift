@@ -23,23 +23,7 @@ struct ProductUIView: View {
                 // MARK: - Top
                 
                 VStack(spacing: -screenHeight * 0.01) {
-                    ZStack {
-                        HStack {
-                            Button {} label: {
-                                Image(systemName: "arrow.left.circle")
-                                    .resizable()
-                                    .foregroundStyle(.black)
-                                    .frame(width: screenWidth * 0.06, height: screenWidth * 0.06)
-                            }
-                            Spacer()
-                        }
-                        
-                        Text("\(product.name)")
-                            .font(.system(size: screenWidth * 0.045, weight: .medium))
-                            .frame(maxWidth: .infinity, alignment: .center)
-                    }
-                    .padding(.horizontal, screenWidth * 0.025)
-                    .padding(.top, screenHeight * 0.02)
+                    CustomNavigationHeader(title: product.name)
                     
                     // MARK: - Image
                     
@@ -75,7 +59,7 @@ struct ProductUIView: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
 
                             HStack {
-                                CustomStepper(value: $count)
+                                CustomStepper(value: $count, textColor: Color("greenColor"), textSecondaryColor: .white, backgroundColor: Color("grayColor"), backgroundSecondaryColor: Color("greenColor"))
                                 
                                 Spacer()
                                 
