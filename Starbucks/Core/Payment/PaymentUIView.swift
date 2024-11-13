@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct PaymentUIView: View {
+    @Environment(\.dismiss) var dismiss
+
     private let screenWidth = UIScreen.main.bounds.width
     private let screenHeight = UIScreen.main.bounds.height
 
@@ -26,12 +28,12 @@ struct PaymentUIView: View {
                     .scaledToFit()
                     .frame(width: UIScreen.main.bounds.width * 0.7, height: UIScreen.main.bounds.height * 0.3)
 
-                Text("Lorem ipsum is simply dummy text of the printing and typesetting.")
+                Text("Your payment has been successfully processed, your order is being prepared.")
                     .font(.system(size: UIScreen.main.bounds.width * 0.04, weight: .regular))
                     .multilineTextAlignment(.center)
 
-                CustomViewButton(title: "Okay", textColor: .white, backgroundColor: Color("greenColor"),height: UIScreen.main.bounds.width * 0.04) {
-                    print("Okay")
+                CustomViewButton(title: "Okay", textColor: .white, backgroundColor: Color("greenColor"), height: UIScreen.main.bounds.width * 0.04) {
+                    dismiss()
                 }
                 .padding(.top, screenHeight * 0.05)
             }

@@ -5,7 +5,10 @@
 //  Created by Hüseyin Umut Kardaş on 5.11.2024.
 //
 
-enum CoffeeSize: String, CaseIterable {
+import Foundation
+import RealmSwift
+
+enum CoffeeSize: String, CaseIterable, PersistableEnum {
     case Tall
     case Grande
     case Venti

@@ -5,7 +5,10 @@
 //  Created by Hüseyin Umut Kardaş on 4.11.2024.
 //
 
-enum Category: CaseIterable {
+import Foundation
+import RealmSwift
+
+enum Category: String, CaseIterable, PersistableEnum {
     case Frappuccino
     case Breakfast
     case Coffee

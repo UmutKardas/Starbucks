@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct ProductUIView: View {
+    @StateObject var viewModel: ProductViewModel = .init()
+    @Environment(\.dismiss) var dismiss
+    
     private let screenWidth = UIScreen.main.bounds.width
     private let screenHeight = UIScreen.main.bounds.height
-    @State var count: Int = 1
-    @State var selectedSize: CoffeeSize = .Tall
     
     var product: Product
+    
     var body: some View {
         ZStack {
             Color("backgroundColor")
@@ -23,7 +25,7 @@ struct ProductUIView: View {
                 // MARK: - Top
                 
                 VStack(spacing: -screenHeight * 0.01) {
-                    CustomNavigationHeader(title: product.name)
+                    CustomNavigationHeader(title: viewModel.product?.name ?? "")
                     
                     // MARK: - Image
                     
@@ -36,10 +38,11 @@ struct ProductUIView: View {
                     
                     VStack(spacing: screenHeight * 0.03) {
                         HStack {
-                            Text("Lorem ipsum is simply dummy text of the printing and typesetting.")
+                            Text("\(viewModel.product?.about ?? "")")
                                 .font(.system(size: screenWidth * 0.04, weight: .light))
+                                .multilineTextAlignment(.leading)
                             
-                            Text("$\(product.price, specifier: "%.2f")")
+                            Text("$\(viewModel.product?.price ?? 0.2, specifier: "%.2f")")
                                 .font(.system(size: screenWidth * 0.05, weight: .bold))
                                 .foregroundStyle(Color("greenColor"))
                                 .padding(screenWidth * 0.025)
@@ -59,11 +62,11 @@ struct ProductUIView: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
 
                             HStack {
-                                CustomStepper(value: $count, textColor: Color("greenColor"), textSecondaryColor: .white, backgroundColor: Color("grayColor"), backgroundSecondaryColor: Color("greenColor"))
+                                CustomStepper(value: $viewModel.count, textColor: Color("greenColor"), textSecondaryColor: .white, backgroundColor: Color("grayColor"), backgroundSecondaryColor: Color("greenColor"))
                                 
                                 Spacer()
                                 
-                                Text("$\(product.price * Double(count), specifier: "%.2f")")
+                                Text("$\(String(format: "%.2f", (viewModel.product?.price ?? 0) * Double(viewModel.count)))")
                                     .font(.system(size: screenWidth * 0.05, weight: .bold))
                                     .foregroundStyle(Color("greenColor"))
                                     .padding(screenWidth * 0.025)
@@ -77,7 +80,7 @@ struct ProductUIView: View {
                                 .font(.system(size: screenWidth * 0.04, weight: .medium))
                                 .frame(maxWidth: .infinity, alignment: .leading)
 
-                            CustomSizePicker(selected: $selectedSize)
+                            CustomSizePicker(selected: $viewModel.selectedSize)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         }
                     }
@@ -87,10 +90,11 @@ struct ProductUIView: View {
 
                     HStack {
                         CustomViewButton(title: "Add to card", textColor: Color("greenColor"), backgroundColor: Color.clear) {
-                            print("Order Now")
+                            print("Add to card")
                         }
                         CustomViewButton(title: "Order Now", textColor: .white, backgroundColor: Color("greenColor")) {
-                            print("Order Now")
+                            viewModel.addOrder()
+                            dismiss()
                         }
                     }
                     .background(Color("grayColor"))
@@ -102,9 +106,13 @@ struct ProductUIView: View {
                 
             }.frame(maxWidth: screenWidth * 0.9)
         }
+        .onAppear {
+            viewModel.product = product
+        }
     }
 }
 
 #Preview {
-    ProductUIView(product: Product(name: "Fantasy Tail", price: 6.99, image: "rainbow", category: .Frappuccino))
+    ProductUIView(product: Product(name: "Breakfast 2", price: 20.99, about: "An energizing breakfast meal to keep you going all day.", image: "breakfast", category: .Breakfast)
+    )
 }

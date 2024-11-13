@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct OrderUIView: View {
+    @StateObject var viewModel: OrderViewModel = .init()
+    @Environment(\.dismiss) var dismiss
+
     private let screenWidth = UIScreen.main.bounds.width
     private let screenHeight = UIScreen.main.bounds.height
 
@@ -22,13 +25,12 @@ struct OrderUIView: View {
                 Spacer()
 
                 ScrollView(.vertical, showsIndicators: false) {
-                    ForEach(0 ... 4, id: \.self) { _ in
-                        VStack {
-                            OrderCellView()
-                        }
-                        .frame(width: screenWidth * 0.9, height: screenHeight * 0.1)
-                        .background(.white)
-                        .cornerRadius(5)
+                    ForEach(viewModel.orders, id: \.self) { product in
+                        OrderCellView(product: product)
+                            .frame(width: screenWidth * 0.9, height: screenHeight * 0.1)
+                            .background(.white)
+                            .cornerRadius(8)
+                            .padding(.bottom, screenHeight * 0.01)
                     }
                 }
                 .padding(.top, screenHeight * 0.03)
@@ -47,13 +49,26 @@ struct OrderUIView: View {
                         Spacer()
                     }
 
-                    OrderAmountDetailView(title: "Price", amount: "$325", titleColor: .gray, amountColor: .gray)
+                    OrderAmountDetailView(title: "Price", amount: "$\(viewModel.totalPrice())", titleColor: .gray, amountColor: .gray)
                     OrderAmountDetailView(title: "Discount", amount: "$0", titleColor: .gray, amountColor: .gray)
-                    OrderAmountDetailView(title: "Total", amount: "$325", titleColor: Color("greenColor"), amountColor: Color("greenColor"))
+                    OrderAmountDetailView(title: "Total", amount: "$\(viewModel.totalPrice())", titleColor: Color("greenColor"), amountColor: Color("greenColor"))
+
+                    HStack {
+                        Spacer()
+
+                        CustomViewButton(title: "Pay now", textColor: Color.white, backgroundColor: Color("greenColor")) {
+                            viewModel.attemptPayment()
+                        }
+                        .frame(maxWidth: screenWidth * 0.5)
+                    }
+                    .padding(.top, screenHeight * 0.02)
                 }
-                .padding(.bottom, screenHeight * 0.03)
+                .padding(.bottom, screenHeight * 0.01)
 
             }.frame(maxWidth: screenWidth * 0.9)
+        }
+        .fullScreenCover(isPresented: $viewModel.isPaymentViewPresented) {
+            PaymentUIView()
         }
     }
 }

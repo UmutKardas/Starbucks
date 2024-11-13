@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct CustomNavigationHeader: View {
+    @Environment(\.dismiss) var dismiss
+
     var title: String
 
     var body: some View {
         ZStack {
             HStack {
-                Button {} label: {
+                Button { dismiss() } label: {
                     Image(systemName: "arrow.left.circle")
                         .resizable()
                         .foregroundStyle(.black)

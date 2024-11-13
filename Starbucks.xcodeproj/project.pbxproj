@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		8A37D73B2CE53B2200489050 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 8A37D73A2CE53B2200489050 /* Swinject */; };
+		8A9E00452CE3E4D6001A2D36 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8A9E00442CE3E4D6001A2D36 /* RealmSwift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		8AEC13F92CD2B3D200513D05 /* Starbucks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Starbucks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +28,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A9E00452CE3E4D6001A2D36 /* RealmSwift in Frameworks */,
+				8A37D73B2CE53B2200489050 /* Swinject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +72,8 @@
 			);
 			name = Starbucks;
 			packageProductDependencies = (
+				8A9E00442CE3E4D6001A2D36 /* RealmSwift */,
+				8A37D73A2CE53B2200489050 /* Swinject */,
 			);
 			productName = Starbucks;
 			productReference = 8AEC13F92CD2B3D200513D05 /* Starbucks.app */;
@@ -94,6 +103,10 @@
 			);
 			mainGroup = 8AEC13F02CD2B3D200513D05;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				8A9E00412CE3E4D6001A2D36 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				8A37D7392CE53B2200489050 /* XCRemoteSwiftPackageReference "Swinject" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8AEC13FA2CD2B3D200513D05 /* Products */;
 			projectDirPath = "";
@@ -322,6 +335,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8A37D7392CE53B2200489050 /* XCRemoteSwiftPackageReference "Swinject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swinject/Swinject";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.9.1;
+			};
+		};
+		8A9E00412CE3E4D6001A2D36 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8A37D73A2CE53B2200489050 /* Swinject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8A37D7392CE53B2200489050 /* XCRemoteSwiftPackageReference "Swinject" */;
+			productName = Swinject;
+		};
+		8A9E00442CE3E4D6001A2D36 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8A9E00412CE3E4D6001A2D36 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8AEC13F12CD2B3D200513D05 /* Project object */;
 }

@@ -8,32 +8,32 @@
 import SwiftUI
 
 struct ProductGridCell: View {
-    @Binding var isProductViewPresented: Bool
+    @State var isPresentingProductView: Bool = false
+
     var product: Product
     var imageHeight: CGFloat
     var gridHeight: CGFloat
     
     var body: some View {
         Button {
-            isProductViewPresented = true
+            isPresentingProductView = true
         } label: {
             VStack {
                 Image(product.image)
                     .resizable()
                     .scaledToFit()
-                    // .frame(height: viewModel.getValueBasedOnIndex(index: index, minValue: 130, maxValue: 170))
                     .frame(height: imageHeight)
-                
+                    
                 Spacer()
-                
+                    
                 HStack {
                     Text("\(product.name)")
                         .font(.system(size: 14, weight: .regular))
                         .foregroundStyle(.black)
                         .minimumScaleFactor(0.9)
-                    
+                        
                     Spacer()
-                    
+                        
                     Text("$\(product.price, specifier: "%.2f")")
                         .font(.system(size: 20, weight: .heavy))
                         .foregroundStyle(Color("greenColor"))
@@ -42,12 +42,12 @@ struct ProductGridCell: View {
                 .padding(.horizontal, 10)
             }
         }
-        // .frame(height: viewModel.getValueBasedOnIndex(index: index, minValue: 160, maxValue: 200))
         .frame(height: gridHeight)
         .background(Color.white)
         .cornerRadius(20)
-        .fullScreenCover(isPresented: $isProductViewPresented) {
+        .fullScreenCover(isPresented: $isPresentingProductView) {
             ProductUIView(product: product)
+                .navigationBarBackButtonHidden(true)
         }
     }
 }

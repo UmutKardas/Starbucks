@@ -11,28 +11,30 @@ struct OrderCellView: View {
     private let screenWidth = UIScreen.main.bounds.width
     private let screenHeight = UIScreen.main.bounds.height
 
+    var product: Product
+
     var body: some View {
         HStack {
-            Image("fantasyTail")
+            Image("\(product.image)")
                 .resizable()
                 .scaledToFit()
                 .frame(width: screenWidth * 0.2, height: screenHeight * 0.1)
 
             VStack {
                 HStack {
-                    Text("Frappucino")
-                        .font(.system(size: 18, weight: .regular))
+                    Text("\(product.name)")
+                        .font(.system(size: screenWidth * 0.045, weight: .regular))
                     Spacer()
 
-                    Text("$35")
+                    Text("$\(product.price * Double(product.count), specifier: "%.2f")")
                         .foregroundStyle(Color("greenColor"))
-                        .font(.system(size: 20, weight: .regular))
+                        .font(.system(size: screenWidth * 0.05, weight: .regular))
                 }
 
                 Spacer()
 
                 HStack {
-                    CustomStepper(value: .constant(0), scaleFactor: 0.5, textColor: .black, textSecondaryColor: .black, backgroundColor: Color("grayColor"), backgroundSecondaryColor: Color("grayColor"))
+                    CustomStepper(value: .constant(product.count), scaleFactor: 0.4, textColor: .black, textSecondaryColor: .black, backgroundColor: Color("grayColor"), backgroundSecondaryColor: Color("grayColor"))
 
                     Spacer()
 
@@ -42,22 +44,29 @@ struct OrderCellView: View {
                         Button("Tall", action: {})
                     } label: {
                         HStack {
-                            Text("Grande")
+                            Text("\(product.size.rawValue)")
+                                .fixedSize(horizontal: true, vertical: false)
+                                .padding(3)
+
                             Image(systemName: "chevron.down")
                         }
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 8)
-                        .font(.system(size: 16, weight: .regular))
+                        .padding(.horizontal, screenWidth * 0.03)
+                        .padding(.vertical, screenHeight * 0.006)
+                        .font(.system(size: screenWidth * 0.04, weight: .regular))
                         .foregroundColor(.black)
                         .background(Color("grayColor"))
-                        .cornerRadius(10)
+                        .cornerRadius(screenWidth * 0.025)
                     }
 
                     Spacer()
                 }
             }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 10)
+            .padding(.horizontal, screenWidth * 0.05)
+            .padding(.vertical, screenHeight * 0.02)
         }
     }
+}
+
+#Preview {
+    OrderCellView(product: Product(name: "Breakfast 2", price: 20.99, about: "An energizing breakfast meal to keep you going all day.", image: "breakfast", category: .Breakfast))
 }
